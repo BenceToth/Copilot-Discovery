@@ -1,4 +1,18 @@
 window.onload = function () {
+    // input with id "username" on change
+    document.getElementById('username').addEventListener('input', function () {
+        const username = document.getElementById('username').value;
+        // regex to check if username has at least 1 capital letter, 1 special character, 1 number, and is at least 8 characters long
+        const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
+        if (regex.test(username)) {
+            // set the username input border to green
+            document.getElementById('username').style.borderColor = 'green';
+        } else {
+            // set the username input border to red
+            document.getElementById('username').style.borderColor = 'red';
+        }
+    });
+    
     document.getElementById('downloadBtn').addEventListener('click', function () {
         const canvas = document.getElementById('barChart');
         const image = canvas.toDataURL('image/png');
