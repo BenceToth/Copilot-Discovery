@@ -1,4 +1,13 @@
 window.onload = function () {
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+        const canvas = document.getElementById('barChart');
+        const image = canvas.toDataURL('image/png');
+        
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'chart.png';
+        link.click();
+    });
     const ctx = document.getElementById('barChart').getContext('2d');
     const barChart = new Chart(ctx, {
         type: 'bar',
