@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.getElementById('chart-tab').addEventListener('click', function () {
     const ctx = document.getElementById('barChart').getContext('2d');
     // Variables for monthly income
     const januaryIncome = parseFloat(document.getElementById('january-income').value) || 0;
