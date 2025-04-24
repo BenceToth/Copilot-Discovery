@@ -6,6 +6,19 @@ window.onload = () => {
     const barChartCanvas = document.getElementById('barChart');
 
     // Validate username input
+    /**
+     * Validates the input value of a username field against a specific regex pattern
+     * and updates the input field's border color based on the validation result.
+     *
+     * The username must meet the following criteria:
+     * - At least one uppercase letter.
+     * - At least one special character (!@#$%^&*).
+     * - At least one digit.
+     * - Minimum length of 8 characters.
+     *
+     * @function usernameInputCallback
+     * @returns {void}
+     */
     function usernameInputCallback() {
         const username = usernameInput.value;
         const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
