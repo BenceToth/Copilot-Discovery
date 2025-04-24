@@ -6,12 +6,12 @@ window.onload = () => {
     const barChartCanvas = document.getElementById('barChart');
 
     // Validate username input
-    usernameInput?.addEventListener('input', () => {
+    function usernameInputCallback() {
         const username = usernameInput.value;
         const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
-
         usernameInput.style.borderColor = regex.test(username) ? 'green' : 'red';
-    });
+    }
+    usernameInput?.addEventListener('input', usernameInputCallback);
 
     // Download chart as an image
     downloadBtn?.addEventListener('click', () => {
