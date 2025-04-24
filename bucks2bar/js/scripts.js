@@ -1,45 +1,51 @@
-window.onload = function () {
-    // input with id "username" on change
-    document.getElementById('username').addEventListener('input', function () {
-        const username = document.getElementById('username').value;
-        // regex to check if username has at least 1 capital letter, 1 special character, 1 number, and is at least 8 characters long
+window.onload = () => {
+    const usernameInput = document.getElementById('username');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const chartTab = document.getElementById('chart-tab');
+    const barChartCanvas = document.getElementById('barChart');
+
+    // Validate username input
+    usernameInput?.addEventListener('input', () => {
+        const username = usernameInput.value;
         const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d).{8,}$/;
-        if (regex.test(username)) {
-            // set the username input border to green
-            document.getElementById('username').style.borderColor = 'green';
-        } else {
-            // set the username input border to red
-            document.getElementById('username').style.borderColor = 'red';
-        }
+
+        usernameInput.style.borderColor = regex.test(username) ? 'green' : 'red';
     });
-    
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-        const canvas = document.getElementById('barChart');
-        const image = canvas.toDataURL('image/png');
-        
+
+    // Download chart as an image
+    downloadBtn?.addEventListener('click', () => {
+        const image = barChartCanvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = image;
         link.download = 'chart.png';
         link.click();
     });
-    const ctx = document.getElementById('barChart').getContext('2d');
+
+    // Initialize bar chart
+    const ctx = barChartCanvas.getContext('2d');
     const barChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                label: 'Monthly Income',
-                data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }, {
-                label: 'Monthly Expenses',
-                data: [],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [
+                {
+                    label: 'Monthly Income',
+                    data: [],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Monthly Expenses',
+                    data: [],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
         },
         options: {
             responsive: true,
@@ -51,47 +57,18 @@ window.onload = function () {
         }
     });
 
-    document.getElementById('chart-tab').addEventListener('click', function () {
-        // Variables for monthly income
-        const januaryIncome = parseFloat(document.getElementById('january-income').value) || 0;
-        const februaryIncome = parseFloat(document.getElementById('february-income').value) || 0;
-        const marchIncome = parseFloat(document.getElementById('march-income').value) || 0;
-        const aprilIncome = parseFloat(document.getElementById('april-income').value) || 0;
-        const mayIncome = parseFloat(document.getElementById('may-income').value) || 0;
-        const juneIncome = parseFloat(document.getElementById('june-income').value) || 0;
-        const julyIncome = parseFloat(document.getElementById('july-income').value) || 0;
-        const augustIncome = parseFloat(document.getElementById('august-income').value) || 0;
-        const septemberIncome = parseFloat(document.getElementById('september-income').value) || 0;
-        const octoberIncome = parseFloat(document.getElementById('october-income').value) || 0;
-        const novemberIncome = parseFloat(document.getElementById('november-income').value) || 0;
-        const decemberIncome = parseFloat(document.getElementById('december-income').value) || 0;
-        
-        // Variables for monthly expenses
-        const januaryExpenses = parseFloat(document.getElementById('january-expenses').value) || 0;
-        const februaryExpenses = parseFloat(document.getElementById('february-expenses').value) || 0;
-        const marchExpenses = parseFloat(document.getElementById('march-expenses').value) || 0;
-        const aprilExpenses = parseFloat(document.getElementById('april-expenses').value) || 0;
-        const mayExpenses = parseFloat(document.getElementById('may-expenses').value) || 0;
-        const juneExpenses = parseFloat(document.getElementById('june-expenses').value) || 0;
-        const julyExpenses = parseFloat(document.getElementById('july-expenses').value) || 0;
-        const augustExpenses = parseFloat(document.getElementById('august-expenses').value) || 0;
-        const septemberExpenses = parseFloat(document.getElementById('september-expenses').value) || 0;
-        const octoberExpenses = parseFloat(document.getElementById('october-expenses').value) || 0;
-        const novemberExpenses = parseFloat(document.getElementById('november-expenses').value) || 0;
-        const decemberExpenses = parseFloat(document.getElementById('december-expenses').value) || 0;
-    
-        // Income and expenses arrays
-        const incomeData = [
-            januaryIncome, februaryIncome, marchIncome, aprilIncome, mayIncome, juneIncome,
-            julyIncome, augustIncome, septemberIncome, octoberIncome, novemberIncome, decemberIncome
+    // Update chart data on tab click
+    chartTab?.addEventListener('click', () => {
+        const months = [
+            'january', 'february', 'march', 'april', 'may', 'june',
+            'july', 'august', 'september', 'october', 'november', 'december'
         ];
-    
-        const expensesData = [
-            januaryExpenses, februaryExpenses, marchExpenses, aprilExpenses, mayExpenses, juneExpenses,
-            julyExpenses, augustExpenses, septemberExpenses, octoberExpenses, novemberExpenses, decemberExpenses
-        ];
+
+        const incomeData = months.map(month => parseFloat(document.getElementById(`${month}-income`)?.value) || 0);
+        const expensesData = months.map(month => parseFloat(document.getElementById(`${month}-expenses`)?.value) || 0);
+
         barChart.data.datasets[0].data = incomeData;
         barChart.data.datasets[1].data = expensesData;
         barChart.update();
     });
-}
+};
