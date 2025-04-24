@@ -1,6 +1,7 @@
 window.onload = () => {
     const usernameInput = document.getElementById('username');
     const downloadBtn = document.getElementById('downloadBtn');
+    const emailBtn = document.getElementById('send-email');
     const chartTab = document.getElementById('chart-tab');
     const barChartCanvas = document.getElementById('barChart');
 
@@ -21,6 +22,35 @@ window.onload = () => {
         link.click();
     });
 
+    emailBtn.addEventListener('click', async () => {
+        const email = document.getElementById('email-address').value;
+        if (!email || !validateEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+    
+        const chartImage = barChartCanvas.toDataURL('image/png');
+    
+        try {
+            const response = await fetch('http://localhost:3000/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, chartImage }),
+            });
+    
+            const result = await response.json();
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                alert(result.error);
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('An error occurred while sending the email.');
+        }
+    });
     // Initialize bar chart
     const ctx = barChartCanvas.getContext('2d');
     const barChart = new Chart(ctx, {
