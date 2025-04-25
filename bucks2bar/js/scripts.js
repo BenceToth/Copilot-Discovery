@@ -1,9 +1,32 @@
-window.onload = () => {
+window.onload = async () => {
     const usernameInput = document.getElementById('username');
     const downloadBtn = document.getElementById('downloadBtn');
     const emailBtn = document.getElementById('send-email');
     const chartTab = document.getElementById('chart-tab');
     const barChartCanvas = document.getElementById('barChart');
+
+    // Fetch dummy data and update inputs
+    try {
+        const response = await fetch('http://localhost:3000/get-dummy-data');
+        const data = await response.json();
+
+        const months = [
+            'january', 'february', 'march', 'april', 'may', 'june',
+            'july', 'august', 'september', 'october', 'november', 'december'
+        ];
+
+        months.forEach((month, index) => {
+            document.getElementById(`${month}-income`).value = data.income[index];
+            document.getElementById(`${month}-expenses`).value = data.expenses[index];
+        });
+
+        // Populate chart data after fetching dummy data
+        barChart.data.datasets[0].data = data.income;
+        barChart.data.datasets[1].data = data.expenses;
+        barChart.update();
+    } catch (error) {
+        console.error('Error fetching dummy data:', error);
+    }
 
     // Validate username input
     /**

@@ -59,6 +59,15 @@ app.post('/send-email', async (req, res) => {
     }
 });
 
+// Endpoint to return dummy data for income and expenses
+app.get('/get-dummy-data', (req, res) => {
+    const dummyData = {
+        income: [1000, 950, 900, 850, 950, 900, 950, 1000, 950, 900, 950, 1000],
+        expenses: [800, 700, 600, 650, 700, 700, 750, 800, 700, 650, 700, 800]
+    };
+    res.status(200).json(dummyData);
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
