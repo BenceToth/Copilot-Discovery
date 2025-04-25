@@ -1,59 +1,30 @@
-# My React App
+# React + TypeScript + Vite
 
-This project is a simple React application scaffolded using Vite. It serves as a starting point for building modern web applications with React.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Project Structure
+Currently, two official plugins are available:
 
-```
-my-react-app
-├── src
-│   ├── App.jsx                # Main application component
-│   ├── main.jsx               # Entry point of the application
-│   ├── assets
-│   │   └── index.js           # Asset management
-│   ├── components
-│   │   └── ExampleComponent.jsx # Example functional component
-│   ├── styles
-│   │   └── index.css          # Global CSS styles
-├── public
-│   └── index.html             # Main HTML file
-├── package.json               # NPM configuration file
-├── vite.config.js             # Vite configuration settings
-└── README.md                  # Project documentation
-```
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Getting Started
+## Expanding the ESLint configuration
 
-To get started with this project, follow these steps:
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-1. **Clone the repository:**
-   ```
-   git clone <repository-url>
-   cd my-react-app
-   ```
+- Configure the top-level `parserOptions` property like this:
 
-2. **Install dependencies:**
-   ```
-   npm install
-   ```
-
-3. **Run the development server:**
-   ```
-   npm run dev
-   ```
-
-4. **Open your browser:**
-   Navigate to `http://localhost:3000` to see your application in action.
-
-## Building for Production
-
-To build the application for production, run:
-```
-npm run build
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
 ```
 
-This will create a `dist` folder with the production-ready files.
-
-## License
-
-This project is licensed under the MIT License.
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
