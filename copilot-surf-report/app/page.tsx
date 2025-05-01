@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { Button } from "../components/ui/button";
 
@@ -17,6 +18,10 @@ export default function Home() {
         <Button onClick={() => alert('Button from shadcn clicked!')}>
           Click Me
         </Button>
+        {/* Temporarily replace the Button component with a static button for debugging */}
+        <button onClick={() => alert('Static button clicked!')}>
+          Static Button
+        </button>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
