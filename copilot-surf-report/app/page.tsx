@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "../components/ui/button";
 
 export default function Home() {
   return (
@@ -12,6 +13,10 @@ export default function Home() {
           height={38}
           priority
         />
+        <h1>Welcome to the Surf Report</h1>
+        <Button onClick={() => alert('Button from shadcn clicked!')}>
+          Click Me
+        </Button>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
